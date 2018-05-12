@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx.xsd"
+	default-lazy-init="false">
+
+	<!--定义solr的server-->
+	<bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+		<constructor-arg index="0" value="http://${solr.host}:${solr.port}/solr/${solr.core1}"/>
+		<!-- 设置响应解析器 -->
+		<property name="parser">
+			<bean class="org.apache.solr.client.solrj.impl.XMLResponseParser"/>
+		</property>
+		<!-- 设置重试次数-->
+		<property name="maxRetries" value="1"/>
+		<!-- 建立连接的最长时间 -->
+		<property name="connectionTimeout" value="5000"/>
+		<property name="soTimeout" value="1000"/>
+		<property name="defaultMaxConnectionsPerHost" value="100"/>
+		<property name="maxTotalConnections" value="100"/>
+		<property name="followRedirects" value="false"/>
+		<property name="allowCompression" value="true"/>
+	</bean>
+</beans> 

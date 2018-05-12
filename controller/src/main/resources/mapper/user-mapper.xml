@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.jk.mapper.UserMapper">
+
+	<!-- 标签总结
+		增：insert
+		删：delete
+		改：update
+		查：select
+	 -->
+	
+	<!-- 属性总结 
+		id：与mapper中的方法名保持一致
+		parameterType：接收mapper传过来的参数类型（可缺省）
+		resultType：返回给mapper的结果类型（必须的，不可缺省）
+	-->
+	
+	<!-- 取值方式
+		${}：不安全，有sql注入风险，取出的数据都是源数据
+		#{}：安全，无sql注入风险，取出的数据都是字符串
+	 -->
+
+	<insert id="insert" parameterType="com.jk.entity.User">
+		INSERT INTO usertwo VALUES(id,#{username},#{password},#{phone})
+	</insert>
+	
+	
+</mapper>   

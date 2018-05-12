@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dobboservice:war">
+    <output-path>$PROJECT_DIR$/dobboservice/target</output-path>
+    <root id="archive" name="dobbo-service.war">
+      <element id="artifact" artifact-name="dobboservice:war exploded" />
+    </root>
+  </artifact>
+</component>

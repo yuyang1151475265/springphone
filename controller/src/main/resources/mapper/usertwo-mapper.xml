@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+<mapper namespace="com.jk.mapper.UserTwoMapper">
+
+	<!-- 标签总结
+		增：insert
+		删：delete
+		改：update
+		查：select
+	 -->
+	
+	<!-- 属性总结 
+		id：与mapper中的方法名保持一致
+		parameterType：接收mapper传过来的参数类型（可缺省）
+		resultType：返回给mapper的结果类型（必须的，不可缺省）
+	-->
+	
+	<!-- 取值方式
+		${}：不安全，有sql注入风险，取出的数据都是源数据
+		#{}：安全，无sql注入风险，取出的数据都是字符串
+	 -->
+	<select id="tableData" resultType="com.jk.entity.UserTwo">
+		SELECT * FROM user
+		<where>
+		  <if test="user.name != null and user.name != ''"> AND name LIKE '%${user.name}%' </if>
+		  <if test="kaishi != '' and jieshu != ''">
+			  AND datetime BETWEEN #{kaishi}
+			  AND #{jieshu}
+		  </if>
+		</where>
+	    LIMIT #{page},#{limit}
+	</select>
+
+
+	<select id="sum" resultType="java.lang.Integer" parameterType="java.lang.Object">
+		SELECT count(id) FROM user
+		<where>
+			<if test="user.name != null and user.name != ''"> AND name LIKE '%${user.name}%' </if>
+			<if test="kaishi != '' and jieshu != ''">
+				AND datetime BETWEEN #{kaishi}
+				AND #{jieshu}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="addUser" parameterType="com.jk.entity.UserTwo">
+		INSERT INTO user(id,name,datetime) VALUES (#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{datetime,jdbcType=TIMESTAMP});
+	</insert>
+	
+	<update id="updateUser" parameterType="com.jk.entity.UserTwo">
+		UPDATE user SET name=#{name,jdbcType=VARCHAR},datetime=#{datetime,jdbcType=TIMESTAMP} WHERE id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="com.jk.entity.UserTwo">
+          DELETE FROM user WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteAll">
+		DELETE FROM user WHERE id IN
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<select id="edit" resultType="com.jk.entity.UserTwo" parameterType="java.lang.String">
+        SELECT * FROM user WHERE id = #{id}
+	</select>
+	
+	
+</mapper>   
